@@ -1,6 +1,6 @@
 import { useContext } from 'react'
 
-import { LocationContext } from '../App'
+import LocationContext from '../contexts/LocationContext'
 
 function RootPage() {
   const { setLocation } = useContext(LocationContext)

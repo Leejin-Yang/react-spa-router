@@ -51,3 +51,32 @@ const onClick = () => {
   setLocation(location.pathname)
 }
 ```
+
+<br>
+
+## 3) Router, Route 컴포넌트
+
+react-router와 같은 형태로 컴포넌트를 구현해본다.
+
+```tsx
+ReactDOM.createRoot(container).render(
+  <Router>
+    <Route path='/' component={<Root />} />
+    <Route path='/about' component={<About />} />
+  </Router>
+)
+```
+
+이전까지 작업한 형태는 다음과 같다.
+
+```tsx
+return (
+  <LocationContext.Provider value={{ basename, setLocation }}>
+    {basename === '/about' ? <AboutPage /> : <RootPage />}
+  </LocationContext.Provider>
+)
+```
+
+형태가 비슷하게 보여진다. 위의 Router는 context를 제공하는 최상위 컴포넌트로 보인다. 우선 Router 컴포넌트를 생성하고 context 관련 코드를 전부 옮겨보았다.
+
+Route 컴포넌트는 context에 저장된 현재 위치와 prop으로 받은 path를 비교해 컴포넌트 렌더 유무를 판단하면 된다.
