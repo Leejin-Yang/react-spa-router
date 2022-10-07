@@ -80,3 +80,40 @@ return (
 형태가 비슷하게 보여진다. 위의 Router는 context를 제공하는 최상위 컴포넌트로 보인다. 우선 Router 컴포넌트를 생성하고 context 관련 코드를 전부 옮겨보았다.
 
 Route 컴포넌트는 context에 저장된 현재 위치와 prop으로 받은 path를 비교해 컴포넌트 렌더 유무를 판단하면 된다.
+
+<br>
+
+## 4) useRouter
+
+경로를 받아 그 페이지로 보내는 push. 이전에 각 페이지마다 구현한 push 함수를 useRouter hook을 생성해 각 페이지마다 사용하도록 한다.
+
+```tsx
+import { useContext } from 'react'
+
+import LocationContext from '../contexts/LocationContext'
+
+export function useRouter() {
+  const { setLocation } = useContext(LocationContext)
+
+  const push = (path: string) => {
+    history.pushState(null, '', path)
+    setLocation(location.pathname)
+  }
+
+  useEffect(() => {
+    const onPopState = () => {
+      setLocation(location.pathname)
+    }
+
+    window.addEventListener('popstate', onPopState)
+
+    return () => {
+      window.removeEventListener('popstate', onPopState)
+    }
+  }, [])
+
+  return { push }
+}
+```
+
+그리고 popstate는 페이지 이동을 감지해 발생하는 이벤트이기에 Router 컴포넌트에서 useRouter 훅으로 이동시켰다. 그렇게 Router 컴포넌트에서는 현재 경로에 대한 상태를 제공해주는 역할만 하게되고, useRouter hook에서는 push나 뒤로가기 앞으로 가기 등 페이지 이동에 대한 이벤트를 다루게 된다.

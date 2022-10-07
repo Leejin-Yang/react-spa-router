@@ -1,19 +1,12 @@
-import { useContext } from 'react'
-
-import LocationContext from '../contexts/LocationContext'
+import { useRouter } from '../hooks'
 
 function RootPage() {
-  const { setLocation } = useContext(LocationContext)
-
-  const onClick = () => {
-    history.pushState(null, '', '/about')
-    setLocation(location.pathname)
-  }
+  const { push } = useRouter()
 
   return (
     <main>
       <h1>root</h1>
-      <button type='button' onClick={onClick}>
+      <button type='button' onClick={() => push('/about')}>
         about
       </button>
     </main>
