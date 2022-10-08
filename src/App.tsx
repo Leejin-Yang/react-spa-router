@@ -1,15 +1,16 @@
 import Route from './components/Route'
 import Router from './components/Router'
+import Routes from './components/Routes'
 
 import AboutPage from './pages/AboutPage'
 import RootPage from './pages/RootPage'
 
 function App() {
   return (
-    <Router>
+    <Routes>
       <Route path='/' component={<RootPage />} />
       <Route path='/about' component={<AboutPage />} />
-    </Router>
+    </Routes>
   )
 }
 
