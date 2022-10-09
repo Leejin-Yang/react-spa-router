@@ -1,20 +1,23 @@
-import { ReactElement, ReactNode, useContext } from 'react'
+import { ReactElement, useContext } from 'react'
 
 import LocationContext from '../contexts/LocationContext'
-import { RouteProps } from './Route'
+import Route from './Route'
+import type { RouteProps } from './Route'
 
-const findRouteComponent = (node: ReactElement, location: string) => {
-  const { path } = node.props as RouteProps
+interface RoutesChildren extends ReactElement<RouteProps, typeof Route> {}
+
+const findRouteComponent = (node: RoutesChildren, location: string) => {
+  const { path } = node.props
   return path === location
 }
 
-const getRouteComponent = (node: ReactElement) => {
-  const { component } = node.props as RouteProps
+const getRouteComponent = (node: RoutesChildren) => {
+  const { component } = node.props
   return component
 }
 
 interface Props {
-  children: ReactElement | ReactElement[]
+  children: RoutesChildren | RoutesChildren[]
 }
 
 function Routes({ children }: Props) {
@@ -28,7 +31,7 @@ function Routes({ children }: Props) {
         findRouteComponent(element, location)
       )
 
-      return getRouteComponent(foundedNode as ReactElement)
+      return getRouteComponent(foundedNode as RoutesChildren)
     }
 
     return getRouteComponent(children)
