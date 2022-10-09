@@ -1,5 +1,4 @@
 import Route from './components/Route'
-import Router from './components/Router'
 import Routes from './components/Routes'
 
 import AboutPage from './pages/AboutPage'

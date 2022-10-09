@@ -13,6 +13,18 @@ function Router({ children }: Props) {
     setCurrentPath(pathname)
   }
 
+  useEffect(() => {
+    const onPopState = () => {
+      setLocation(location.pathname)
+    }
+
+    window.addEventListener('popstate', onPopState)
+
+    return () => {
+      window.removeEventListener('popstate', onPopState)
+    }
+  }, [])
+
   return (
     <LocationContext.Provider value={{ location: currentPath, setLocation }}>
       {children}
